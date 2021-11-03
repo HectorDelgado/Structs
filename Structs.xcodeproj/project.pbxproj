@@ -10,6 +10,8 @@
 		225970122732699B0057C053 /* Structs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 225970082732699B0057C053 /* Structs.framework */; };
 		225970172732699B0057C053 /* StructsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225970162732699B0057C053 /* StructsTests.swift */; };
 		225970192732699B0057C053 /* Structs.h in Headers */ = {isa = PBXBuildFile; fileRef = 2259700B2732699B0057C053 /* Structs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2259702527326B850057C053 /* SLLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2259702327326B850057C053 /* SLLNode.swift */; };
+		2259702627326B850057C053 /* SinglyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2259702427326B850057C053 /* SinglyLinkedList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,8 @@
 		225970112732699B0057C053 /* StructsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StructsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		225970162732699B0057C053 /* StructsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructsTests.swift; sourceTree = "<group>"; };
 		225970182732699B0057C053 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2259702327326B850057C053 /* SLLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLNode.swift; sourceTree = "<group>"; };
+		2259702427326B850057C053 /* SinglyLinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglyLinkedList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +75,7 @@
 		2259700A2732699B0057C053 /* Structs */ = {
 			isa = PBXGroup;
 			children = (
+				2259702227326B780057C053 /* LinkedList */,
 				2259700B2732699B0057C053 /* Structs.h */,
 				2259700C2732699B0057C053 /* Info.plist */,
 			);
@@ -84,6 +89,15 @@
 				225970182732699B0057C053 /* Info.plist */,
 			);
 			path = StructsTests;
+			sourceTree = "<group>";
+		};
+		2259702227326B780057C053 /* LinkedList */ = {
+			isa = PBXGroup;
+			children = (
+				2259702427326B850057C053 /* SinglyLinkedList.swift */,
+				2259702327326B850057C053 /* SLLNode.swift */,
+			);
+			path = LinkedList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +161,7 @@
 				TargetAttributes = {
 					225970072732699B0057C053 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 					225970102732699B0057C053 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -194,6 +209,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2259702627326B850057C053 /* SinglyLinkedList.swift in Sources */,
+				2259702527326B850057C053 /* SLLNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +358,7 @@
 		2259701D2732699B0057C053 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 26666G9V78;
@@ -357,6 +375,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hectordelgado.Structs;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -365,6 +384,7 @@
 		2259701E2732699B0057C053 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 26666G9V78;
@@ -389,6 +409,7 @@
 		225970202732699B0057C053 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 26666G9V78;
 				INFOPLIST_FILE = StructsTests/Info.plist;
@@ -407,6 +428,7 @@
 		225970212732699B0057C053 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 26666G9V78;
 				INFOPLIST_FILE = StructsTests/Info.plist;

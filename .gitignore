@@ -5,3 +5,5 @@ xcuserdata/
 *.hmap
 
 .build/
+
+.DS_Store
