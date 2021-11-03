@@ -18,7 +18,7 @@ class StructsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testAppendInLinkedListCount() throws {
+    func testLinkedListAppendCheckCount() throws {
         // Given
         var singlyLinkedList = SinglyLinkedList<Int>()
         let range = 1...10
@@ -32,7 +32,35 @@ class StructsTests: XCTestCase {
         XCTAssert(singlyLinkedList.count == range.count)
     }
     
-    func
+    func testLinkedListAppendCheckFirstNode() throws {
+        // Given
+        var singlyLinkedList = SinglyLinkedList<Int>()
+        let range = 1...10
+        
+        // When
+        for i in range {
+            singlyLinkedList.append(i)
+        }
+        
+        // Then
+        XCTAssert(singlyLinkedList.first == range.first)
+    }
+    
+    func testLinkedListAppendThenClear() throws {
+        // Given
+        var singlyLinkedList = SinglyLinkedList<Int>()
+        
+        // When
+        for i in 1...10 {
+            singlyLinkedList.append(i)
+        }
+        singlyLinkedList.clear()
+        
+        // Then
+        XCTAssert(singlyLinkedList.first == nil && singlyLinkedList.count == 0)
+    }
+    
+    
 
 //    func testPerformanceExample() throws {
 //        // This is an example of a performance test case.

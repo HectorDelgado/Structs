@@ -11,23 +11,22 @@ import Foundation
  This is a simple implementation of a singly linked list.
  */
 public struct SinglyLinkedList<T> {
+    
+    //MARK: - Properties
+    
     enum SLLError: Error {
         case OutOfBoundsError(description: String)
         case EmptyListError(description: String)
     }
     
-    /// First node in the list.
     private var head: SLLNode<T>?
     
-    /// Total number of nodes in the list.
     public private(set) var count = 0
     
-    /// True if the list contains no nodes.
     public var isEmpty: Bool {
         return count == 0
     }
     
-    /// The element in the first node.
     public var first: T? {
         return head?.data
     }
@@ -78,7 +77,6 @@ public struct SinglyLinkedList<T> {
      */
     public mutating func insert(_ data: T, beforeIndex position: Int) throws {
         try checkIndex(at: position)
-        
         if position == 0 {
             push(data)
         } else {
@@ -99,7 +97,6 @@ public struct SinglyLinkedList<T> {
      */
     public mutating func insert(_ data: T, afterIndex position: Int) throws {
         try checkIndex(at: position)
-        
         if position == count - 1 {
             append(data)
         } else {
@@ -160,6 +157,7 @@ public struct SinglyLinkedList<T> {
         guard head != nil else {
             return nil
         }
+        
         copyNodes()
         let temp = head
         head = head?.next
@@ -213,7 +211,7 @@ public struct SinglyLinkedList<T> {
     }
     
     /**
-     Copies the values of all nodes from the list.
+     Copies the values of all nodes from the list if the head node is not uniquely referenced.
      */
     private mutating func copyNodes() {
         guard !isKnownUniquelyReferenced(&head) else {
@@ -233,7 +231,12 @@ public struct SinglyLinkedList<T> {
     }
 }
 
+//MARK: - T: Equatable extensions
+
 extension SinglyLinkedList where T: Equatable {
+    
+    //MARK: - Insertion
+    
     /**
      Inserts a node after the target data.
      - Parameters:
@@ -269,21 +272,23 @@ extension SinglyLinkedList where T: Equatable {
         guard head != nil else {
             return false
         }
-        guard head!.data != targetData else {
+        
+        if head!.data == targetData {
             push(data)
             return true
-        }
-        
-        
-        if let previousNode = getNode(before: targetData) {
-            copyNodes()
-            previousNode.next = SLLNode(data: data, next: previousNode.next)
-            count += 1
-            return true
         } else {
-            return false
+            if let previousNode = getNode(before: targetData) {
+                copyNodes()
+                previousNode.next = SLLNode(data: data, next: previousNode.next)
+                count += 1
+                return true
+            } else {
+                return false
+            }
         }
     }
+    
+    //MARK: - Deletion
     
     /**
      Removes the node with the given data from the list.
@@ -304,6 +309,8 @@ extension SinglyLinkedList where T: Equatable {
             return nil
         }
     }
+    
+    //MARK: - Search/Retrieval
     
     /**
      Searches for and returns the first node that contains the given data.
@@ -370,6 +377,9 @@ extension SinglyLinkedList where T: Equatable {
     }
 }
 
+
+//MARK: - CustomStringConvertable extension
+
 extension SinglyLinkedList: CustomStringConvertible {
     public var description: String {
         var currentNode = head
@@ -385,5 +395,20 @@ extension SinglyLinkedList: CustomStringConvertible {
         
         desc += "]"
         return desc
+    }
+}
+
+//MARK: - ExpressiblyByArrayLiteral extension
+extension SinglyLinkedList: ExpressibleByArrayLiteral {
+    public init(arrayLiteral elements: T...) {
+        let newHead = SLLNode(data: elements.first!)
+        var tempHead = newHead.next
+        
+        for i in 1..<elements.count {
+            tempHead = SLLNode(data: elements[i])
+            tempHead = tempHead?.next
+        }
+        head = newHead
+        count = elements.count
     }
 }
