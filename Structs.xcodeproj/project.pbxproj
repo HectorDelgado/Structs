@@ -12,6 +12,8 @@
 		225970192732699B0057C053 /* Structs.h in Headers */ = {isa = PBXBuildFile; fileRef = 2259700B2732699B0057C053 /* Structs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2259702527326B850057C053 /* SLLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2259702327326B850057C053 /* SLLNode.swift */; };
 		2259702627326B850057C053 /* SinglyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2259702427326B850057C053 /* SinglyLinkedList.swift */; };
+		2259702927327B1A0057C053 /* DLLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2259702727327B1A0057C053 /* DLLNode.swift */; };
+		2259702A27327B1A0057C053 /* DoublyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2259702827327B1A0057C053 /* DoublyLinkedList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +35,8 @@
 		225970182732699B0057C053 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2259702327326B850057C053 /* SLLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLNode.swift; sourceTree = "<group>"; };
 		2259702427326B850057C053 /* SinglyLinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglyLinkedList.swift; sourceTree = "<group>"; };
+		2259702727327B1A0057C053 /* DLLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLLNode.swift; sourceTree = "<group>"; };
+		2259702827327B1A0057C053 /* DoublyLinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoublyLinkedList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,8 @@
 		2259702227326B780057C053 /* LinkedList */ = {
 			isa = PBXGroup;
 			children = (
+				2259702727327B1A0057C053 /* DLLNode.swift */,
+				2259702827327B1A0057C053 /* DoublyLinkedList.swift */,
 				2259702427326B850057C053 /* SinglyLinkedList.swift */,
 				2259702327326B850057C053 /* SLLNode.swift */,
 			);
@@ -209,8 +215,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2259702927327B1A0057C053 /* DLLNode.swift in Sources */,
 				2259702627326B850057C053 /* SinglyLinkedList.swift in Sources */,
 				2259702527326B850057C053 /* SLLNode.swift in Sources */,
+				2259702A27327B1A0057C053 /* DoublyLinkedList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

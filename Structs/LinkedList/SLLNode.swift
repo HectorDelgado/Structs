@@ -6,18 +6,34 @@
 //
 import Foundation
 
-final class SLLNode<T> {
+/**
+ Represents a node in a singly linked list which contains data and
+ a reference to the next node.
+ */
+final public class SLLNode<T: Comparable> {
     var data: T
     var next: SLLNode<T>?
     
-    init(data: T, next: SLLNode<T>? = nil) {
+    /**
+     Initializes a SLLNode with the given data and a next reference.
+     - Parameters:
+        - data: The data to set for the node.
+        - next: A reference to the next node.
+     */
+    public init(data: T, next: SLLNode<T>? = nil) {
         self.data = data
         self.next = next
     }
 }
 
-extension SLLNode: Equatable where T: Equatable {
-    static func == (lhs: SLLNode<T>, rhs: SLLNode<T>) -> Bool {
+extension SLLNode: Equatable {
+    public static func == (lhs: SLLNode<T>, rhs: SLLNode<T>) -> Bool {
         return lhs.data == rhs.data
+    }
+}
+
+extension SLLNode: CustomStringConvertible {
+    public var description: String {
+        return "\(data)"
     }
 }

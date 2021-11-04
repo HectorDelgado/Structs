@@ -1,25 +1,27 @@
 //
-//  SinglyLinkedList.swift
+//  DoublyLinkedList.swift
 //  DynamicDataStructures
 //
-//  Created by Hector Delgado on 10/20/21.
+//  Created by Hector Delgado on 10/22/21.
 //
 
 import Foundation
 
 /**
- An implementation of a singly linked list that provides quick
- insertions & deletions at the front of the list.
+ An implementation of a doubly linked list that provides quick
+ insertions & deletions at both the front and end of the list.
  */
-public struct SinglyLinkedList<T: Comparable> {
+public struct DoublyLinkedList<T: Comparable> {
     
     //MARK: - Properties
     
-    enum SLLError: Error {
+    enum DLLError: Error {
         case OutOfBoundsError(description: String)
     }
     
-    private var head: SLLNode<T>?
+    private var head: DLLNode<T>?
+    
+    private var tail: DLLNode<T>?
     
     public private(set) var count = 0
     
@@ -31,6 +33,10 @@ public struct SinglyLinkedList<T: Comparable> {
         return head?.data
     }
     
+    public var last: T? {
+        return tail?.data
+    }
+    
     //MARK: - Constructors
     
     /**
@@ -39,41 +45,54 @@ public struct SinglyLinkedList<T: Comparable> {
     public init() {}
     
     /**
-     Initializes the linked list with the given data as the first element.
+     Initializes the linked list with the given data as the first and last element.
      - Parameter data: The data to initialize the list with.
      */
     public init(data: T) {
-        head = SLLNode(data: data)
+        head = DLLNode(data: data)
+        tail = head
         count += 1
     }
     
     /**
      Initializes the linked list from the given sequence of elements.
-     - Parameter sequence: A sequene of valules to create the list form.
+     - Parameter sequence: A sequence of values to create the list from.
      */
     public init<S: Sequence>(_ sequence: S) where
         S.Iterator.Element == T {
-        var tempList = SinglyLinkedList<T>()
+        var tempList = DoublyLinkedList<T>()
         
         for element in sequence {
             tempList.append(element)
         }
         
         self.head = tempList.head
+        self.tail = tempList.tail
         self.count = tempList.count
     }
+    
+    
+
+    
+    
+    
+    
+    
 }
 
 //MARK: - Insertion
 
-extension SinglyLinkedList {
+extension DoublyLinkedList {
     /**
      Inserts an element at the beginning of the list.
      - Parameter data: The element to insert into the list.
      */
     public mutating func push(_ data: T) {
         copyNodes()
-        head = SLLNode(data: data, next: head)
+        head = DLLNode(data: data, prev: nil, next: head)
+        if tail == nil {
+            tail = head
+        }
         count += 1
     }
     
@@ -88,7 +107,9 @@ extension SinglyLinkedList {
         }
         
         copyNodes()
-        getLastNode()!.next = SLLNode(data: data)
+        let newNode = DLLNode(data: data, prev: tail)
+        tail!.next = newNode
+        tail = newNode
         count += 1
     }
     
@@ -96,7 +117,7 @@ extension SinglyLinkedList {
      Inserts the given element before the target element if it exist in the list.
      - Parameters:
         - data: The element to insert into the list.
-        - targetData: The element to insert the new element before.
+        - targetData: The element to insert to insert the new element before.
      - Returns: True if the element was successfully added to the list, false otherwise.
      */
     @discardableResult
@@ -104,14 +125,15 @@ extension SinglyLinkedList {
         guard head != nil else {
             return false
         }
-        
         if head!.data == targetData {
             push(data)
             return true
         } else {
             if let previousNode = getNode(before: targetData) {
                 copyNodes()
-                previousNode.next = SLLNode(data: data, next: previousNode.next)
+                let newNode = DLLNode(data: data, prev: previousNode, next: previousNode.next)
+                previousNode.next?.prev = newNode
+                previousNode.next = newNode
                 count += 1
                 return true
             } else {
@@ -133,23 +155,30 @@ extension SinglyLinkedList {
             return false
         }
         
-        if let targetNode = getNode(with: targetData) {
-            copyNodes()
-            targetNode.next = SLLNode(data: data, next: targetNode.next)
-            count += 1
+        if tail!.data == targetData {
+            append(data)
             return true
         } else {
-            return false
+            if let targetNode = getNode(with: targetData) {
+                copyNodes()
+                let newNode = DLLNode(data: data, prev: targetNode, next: targetNode.next)
+                targetNode.next?.prev = newNode
+                targetNode.next = newNode
+                count += 1
+                return true
+            } else {
+                return false
+            }
         }
     }
     
     /**
-     Inserts the given element before the given index in the list.
+     Inserts the given element before the given position in the list.
      - Parameters:
         - data: The element to insert into the list.
         - index: The position to insert a new element into the list.
      - Precondition: `index` must be non-negative and less than `count` - 1.
-     - Throws: `SLLError.OutOfBoundsError`
+     - Throws: `DLLError.OutOfBoundsError`
      */
     public mutating func insert(_ data: T, beforeIndex index: Int) throws {
         try checkIndex(at: index)
@@ -158,19 +187,21 @@ extension SinglyLinkedList {
         } else {
             if let previousNode = getNode(at: index - 1) {
                 copyNodes()
-                previousNode.next = SLLNode(data: data, next: previousNode.next)
+                let newNode = DLLNode(data: data, prev: previousNode, next: previousNode.next)
+                previousNode.next?.prev = newNode
+                previousNode.next = newNode
                 count += 1
             }
         }
     }
     
     /**
-     Inserts the given element after the given index in the list.
+     Inserts the given element after the given position in the list.
      - Parameters:
         - data: The element to insert into the list.
-        - position: The index to insert the element at.
+        - index: The position to insert a new element into the list.
      - Precondition: `index` must be non-negative and less than `count` - 1.
-     - Throws: `SLLError.IndexOutOfBoundsError`
+     - Throws: `DLLError.OutOfBoundsError`
      */
     public mutating func insert(_ data: T, afterIndex index: Int) throws {
         try checkIndex(at: index)
@@ -179,7 +210,9 @@ extension SinglyLinkedList {
         } else {
             if let targetNode = getNode(at: index) {
                 copyNodes()
-                targetNode.next = SLLNode(data: data, next: targetNode.next)
+                let newNode = DLLNode(data: data, prev: targetNode, next: targetNode.next)
+                targetNode.next?.prev = newNode
+                targetNode.next = newNode
                 count += 1
             }
         }
@@ -188,7 +221,7 @@ extension SinglyLinkedList {
 
 //MARK: - Deletion
 
-extension SinglyLinkedList {
+extension DoublyLinkedList {
     /**
      Removes the element at the given index.
      - Parameter index: The index to remove an element at.
@@ -201,20 +234,22 @@ extension SinglyLinkedList {
         try checkIndex(at: index)
         if index == 0 {
             return removeFirst()!
+        } else if index == count - 1 {
+            return removeLast()!
         } else {
             copyNodes()
-            let previousNode = getNode(at: index - 1)!
-            let targetNode = previousNode.next!
-            previousNode.next = targetNode.next
+            let targertNode = getNode(at: index)!
+            targertNode.prev?.next = targertNode.next
+            targertNode.next?.prev = targertNode.prev
             count -= 1
-            return targetNode.data
+            return targertNode.data
         }
     }
     
     /**
      Removes the element with the given data from the list.
-     - Parameter data: The element to remove from the list.
-     - Returns: The element that was removed from the list, or nil if does not exist.
+     - Parameter data: The element to removed from the list.
+     - Returns: The element that was removed from the list, or nil if it does not exist.
      */
     @discardableResult
     public mutating func remove(_ data: T) -> T? {
@@ -224,17 +259,18 @@ extension SinglyLinkedList {
         
         if head!.data == data {
             return removeFirst()
+        } else if tail!.data == data {
+            return removeLast()
         } else {
-            let previousNode = head
-            while let targetNode = previousNode?.next {
-                if targetNode.data == data {
-                    copyNodes()
-                    previousNode?.next = targetNode.next
-                    count -= 1
-                    return targetNode.data
-                }
+            if let targetNode = getNode(with: data) {
+                copyNodes()
+                targetNode.prev?.next = targetNode.next
+                targetNode.next?.prev = targetNode.prev
+                count -= 1
+                return targetNode.data
+            } else {
+                return nil
             }
-            return nil
         }
     }
     
@@ -246,7 +282,21 @@ extension SinglyLinkedList {
     public mutating func removeFirst() -> T? {
         copyNodes()
         let temp = head
+        head?.next?.prev = nil
         head = head?.next
+        count -= 1
+        return temp?.data
+    }
+    
+    /**
+     Removes the last element in the list.
+     - Returns: The last element in the list, or nil if the list is empty.
+     */
+    public mutating func removeLast() -> T? {
+        copyNodes()
+        let temp = tail
+        tail?.prev?.next = nil
+        tail = tail?.prev
         count -= 1
         return temp?.data
     }
@@ -257,19 +307,19 @@ extension SinglyLinkedList {
     public mutating func clear() {
         copyNodes()
         head = nil
+        tail = nil
         count = 0
     }
 }
 
 //MARK: - Search/Retrieval
-
-extension SinglyLinkedList {
+extension DoublyLinkedList {
     /**
-     Searches for and returns the node at the given position.
+     Searches for the returns the node at the given position.
      - Parameter index: The position of the node to retrieve from the list.
      - Returns: The node at the given position, or nil.
      */
-    private func getNode(at index: Int) -> SLLNode<T>? {
+    private func getNode(at index: Int) -> DLLNode<T>? {
         var currentNode = head
         var currentIndex = 0
         while currentNode != nil {
@@ -279,7 +329,6 @@ extension SinglyLinkedList {
             currentNode = currentNode?.next
             currentIndex += 1
         }
-        
         return nil
     }
     
@@ -288,16 +337,15 @@ extension SinglyLinkedList {
      - Parameter data: The data to search for.
      - Returns: The first node that contains the given data if it exist, or nil.
      */
-    private func getNode(with data: T) -> SLLNode<T>? {
+    private func getNode(with data: T) -> DLLNode<T>? {
         var currentNode = head
         
         while currentNode != nil {
-            if currentNode?.data == data {
+            if currentNode!.data == data {
                 return currentNode
             }
             currentNode = currentNode?.next
         }
-        
         return nil
     }
     
@@ -306,7 +354,7 @@ extension SinglyLinkedList {
      - Parameter data: The data to search for.
      - Returns: The first node before the node that contains the given data if it exist, or nill
      */
-    private func getNode(before data: T) -> SLLNode<T>? {
+    private func getNode(before data: T) -> DLLNode<T>? {
         var previousNode = head
         
         while let currentNode = previousNode?.next {
@@ -328,7 +376,7 @@ extension SinglyLinkedList {
         var currentIndex = 0
         
         while currentNode != nil {
-            if currentNode?.data == data {
+            if currentNode!.data == data {
                 return currentIndex
             }
             currentNode = currentNode?.next
@@ -337,43 +385,14 @@ extension SinglyLinkedList {
         
         return -1
     }
-    
-    /**
-     Returns the last node in the list.
-     - Returns: The last node in the list, or nil if the list is empty.
-     */
-    private func getLastNode() -> SLLNode<T>? {
-        var currentNode = head
-        
-        while currentNode?.next != nil {
-            currentNode = currentNode?.next
-        }
-        
-        return currentNode
-    }
-    
-    /**
-     Returns true if the list contains the item.
-     - Parameter data: The element to search for.
-     - Returns: True if the item exists in the list.
-     */
-    public func contains(_ data: T) -> Bool {
-        guard head != nil else {
-            return false
-        }
-        if head!.data == data {
-            return true
-        }
-        return indexOf(data: data) >= 0
-    }
 }
 
 //MARK: - Utility
 
-extension SinglyLinkedList {
+extension DoublyLinkedList {
     private func checkIndex(at position: Int) throws {
         if !indexIsValid(at: position) {
-            throw SLLError.OutOfBoundsError(description: "Out of bounds exception. Position \(position) with size of \(count)")
+            throw DLLError.OutOfBoundsError(description: "Out of bounds exception. Position \(position) with size of \(count).")
         }
     }
     
@@ -391,23 +410,23 @@ extension SinglyLinkedList {
         guard !isKnownUniquelyReferenced(&head) else {
             return
         }
-        guard var oldNode = head else {
+        guard head != nil else {
             return
         }
-        head = SLLNode(data: oldNode.data)
-        var newNode = head
         
-        while let nextOldNode = oldNode.next {
-            newNode!.next = SLLNode(data: nextOldNode.data)
-            newNode = nextOldNode
-            oldNode = nextOldNode
+        var tempList = DoublyLinkedList<T>()
+        tempList.append(head!.data)
+        
+        while let nextNode = head?.next {
+            tempList.append(nextNode.data)
         }
+        head = tempList.head
     }
 }
 
 //MARK: - CustomStringConvertable
 
-extension SinglyLinkedList: CustomStringConvertible {
+extension DoublyLinkedList: CustomStringConvertible {
     public var description: String {
         var currentNode = head
         var desc = "Head ["
@@ -415,27 +434,27 @@ extension SinglyLinkedList: CustomStringConvertible {
         while currentNode != nil {
             desc += "\(currentNode!)"
             if currentNode?.next != nil {
-                desc += "->"
+                desc += "<->"
             }
             currentNode = currentNode?.next
         }
         
-        return desc + "]"
+        return desc + "] Tail"
     }
 }
 
 //MARK: - ExpressiblyByArrayLiteral
 
-extension SinglyLinkedList: ExpressibleByArrayLiteral {
+extension DoublyLinkedList: ExpressibleByArrayLiteral {
     public init(arrayLiteral elements: T...) {
         self.init()
-        elements.forEach { append($0) }
+        elements.forEach{ append($0) }
     }
 }
 
 //MARK: - Sequence & IteratorProtocol
 
-extension SinglyLinkedList: Sequence, IteratorProtocol {
+extension DoublyLinkedList: Sequence, IteratorProtocol {
     public mutating func next() -> T? {
         defer {
             head = head?.next
@@ -446,7 +465,7 @@ extension SinglyLinkedList: Sequence, IteratorProtocol {
 
 //MARK: - Subscript
 
-extension SinglyLinkedList {
+extension DoublyLinkedList {
     public subscript(index: Int) -> T {
         return getNode(at: index)!.data
     }

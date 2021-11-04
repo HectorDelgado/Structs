@@ -60,6 +60,39 @@ class StructsTests: XCTestCase {
         XCTAssert(singlyLinkedList.first == nil && singlyLinkedList.count == 0)
     }
     
+    func testLinkedListCollectionProtocol() throws {
+        var singlyLinkedList = SinglyLinkedList(arrayLiteral: 3, 1351, 155)
+        
+        let firstValue = singlyLinkedList[2] == 155
+        
+        XCTAssert(firstValue)
+    }
+    
+    //MARK: - Doubly Linked List Test
+    
+    func testDoublyLinkedListAppendCheckCount() throws {
+        var list = DoublyLinkedList<Int>()
+        let values = [3, 5, 7, 11]
+        values.forEach { list.append($0) }
+        XCTAssert(list.count == values.count)
+    }
+    
+    func testDoublyLinkedListAppendCheckFirst() throws {
+        var list = DoublyLinkedList<Int>()
+        let values = [3, 5, 7, 11]
+        values.forEach { list.append($0) }
+        XCTAssert(list.first == values.first)
+    }
+    
+    func testDoublyLinkedListAppendCheckLast() throws {
+        var list = DoublyLinkedList<Int>()
+        let values = [3, 5, 7, 11]
+        values.forEach { list.append($0) }
+        print(list.reversed().first)
+        XCTAssert(values.last == list.reversed().first)
+    }
+    
+   
     
 
 //    func testPerformanceExample() throws {
