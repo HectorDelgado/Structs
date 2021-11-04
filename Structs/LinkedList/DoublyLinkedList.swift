@@ -424,6 +424,21 @@ extension DoublyLinkedList {
     }
 }
 
+extension DoublyLinkedList: Equatable {
+    public static func ==(lhs: DoublyLinkedList, rhs: DoublyLinkedList) -> Bool {
+        guard lhs.count == rhs.count else {
+            return false
+        }
+        
+        for (left, right) in zip(lhs, rhs) {
+            if left != right {
+                return false
+            }
+        }
+        return true
+    }
+}
+
 //MARK: - CustomStringConvertable
 
 extension DoublyLinkedList: CustomStringConvertible {

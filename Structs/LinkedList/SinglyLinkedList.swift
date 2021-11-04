@@ -405,6 +405,23 @@ extension SinglyLinkedList {
     }
 }
 
+//MARK: - Equatable
+
+extension SinglyLinkedList: Equatable {
+    public static func ==(lhs: SinglyLinkedList, rhs: SinglyLinkedList) -> Bool {
+        guard lhs.count == rhs.count else {
+            return false
+        }
+        
+        for (left, right) in zip(lhs, rhs) {
+            if left != right {
+                return false
+            }
+        }
+        return true
+    }
+}
+
 //MARK: - CustomStringConvertable
 
 extension SinglyLinkedList: CustomStringConvertible {

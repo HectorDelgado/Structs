@@ -61,11 +61,17 @@ class StructsTests: XCTestCase {
     }
     
     func testLinkedListCollectionProtocol() throws {
-        var singlyLinkedList = SinglyLinkedList(arrayLiteral: 3, 1351, 155)
+        var list = SinglyLinkedList<Int>()
         
-        let firstValue = singlyLinkedList[2] == 155
+        for i in 0...100 {
+            list.append(i)
+        }
+        let result = SinglyLinkedList(list.filter {$0 % 2 == 0})
+        print(result)
         
-        XCTAssert(firstValue)
+        
+        
+        //XCTAssert(firstValue)
     }
     
     //MARK: - Doubly Linked List Test
@@ -84,13 +90,7 @@ class StructsTests: XCTestCase {
         XCTAssert(list.first == values.first)
     }
     
-    func testDoublyLinkedListAppendCheckLast() throws {
-        var list = DoublyLinkedList<Int>()
-        let values = [3, 5, 7, 11]
-        values.forEach { list.append($0) }
-        print(list.reversed().first)
-        XCTAssert(values.last == list.reversed().first)
-    }
+    
     
    
     

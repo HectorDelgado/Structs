@@ -11,7 +11,10 @@ import Foundation
  a reference to the next node.
  */
 final public class SLLNode<T: Comparable> {
+    /// The data stored in the node.
     var data: T
+    
+    /// A reference to the next node.
     var next: SLLNode<T>?
     
     /**
@@ -26,11 +29,15 @@ final public class SLLNode<T: Comparable> {
     }
 }
 
+//MARK: - Equatable
+
 extension SLLNode: Equatable {
     public static func == (lhs: SLLNode<T>, rhs: SLLNode<T>) -> Bool {
         return lhs.data == rhs.data
     }
 }
+
+//MARK: - CustomStringConvertable
 
 extension SLLNode: CustomStringConvertible {
     public var description: String {

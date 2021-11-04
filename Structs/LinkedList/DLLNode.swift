@@ -12,8 +12,13 @@ import Foundation
  to the previous node, and a reference to the next node.
  */
 final class DLLNode<T: Comparable> {
+    /// The data stored in the node.
     var data: T
+    
+    /// A weak reference to the previous node.
     weak var prev: DLLNode<T>?
+    
+    /// A reference to the next node.
     var next: DLLNode<T>?
     
     /**
@@ -30,11 +35,15 @@ final class DLLNode<T: Comparable> {
     }
 }
 
+//MARK: - Equatable
+
 extension DLLNode: Equatable {
     static func ==(lhs: DLLNode<T>, rhs: DLLNode<T>) -> Bool {
         return lhs.data == rhs.data
     }
 }
+
+//MARK: - CustomStringConvertable
 
 extension DLLNode: CustomStringConvertible {
     public var description: String {

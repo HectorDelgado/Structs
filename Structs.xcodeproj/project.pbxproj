@@ -14,6 +14,9 @@
 		2259702627326B850057C053 /* SinglyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2259702427326B850057C053 /* SinglyLinkedList.swift */; };
 		2259702927327B1A0057C053 /* DLLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2259702727327B1A0057C053 /* DLLNode.swift */; };
 		2259702A27327B1A0057C053 /* DoublyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2259702827327B1A0057C053 /* DoublyLinkedList.swift */; };
+		2259702D2733BF060057C053 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2259702C2733BF060057C053 /* Queue.swift */; };
+		2259702F2733BF6B0057C053 /* QueueArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2259702E2733BF6B0057C053 /* QueueArray.swift */; };
+		225970312733CD320057C053 /* QueueLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225970302733CD320057C053 /* QueueLinkedList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +40,9 @@
 		2259702427326B850057C053 /* SinglyLinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglyLinkedList.swift; sourceTree = "<group>"; };
 		2259702727327B1A0057C053 /* DLLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLLNode.swift; sourceTree = "<group>"; };
 		2259702827327B1A0057C053 /* DoublyLinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoublyLinkedList.swift; sourceTree = "<group>"; };
+		2259702C2733BF060057C053 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		2259702E2733BF6B0057C053 /* QueueArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueArray.swift; sourceTree = "<group>"; };
+		225970302733CD320057C053 /* QueueLinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueLinkedList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +85,7 @@
 		2259700A2732699B0057C053 /* Structs */ = {
 			isa = PBXGroup;
 			children = (
+				2259702B2733BEF40057C053 /* Queue */,
 				2259702227326B780057C053 /* LinkedList */,
 				2259700B2732699B0057C053 /* Structs.h */,
 				2259700C2732699B0057C053 /* Info.plist */,
@@ -104,6 +111,16 @@
 				2259702327326B850057C053 /* SLLNode.swift */,
 			);
 			path = LinkedList;
+			sourceTree = "<group>";
+		};
+		2259702B2733BEF40057C053 /* Queue */ = {
+			isa = PBXGroup;
+			children = (
+				2259702C2733BF060057C053 /* Queue.swift */,
+				2259702E2733BF6B0057C053 /* QueueArray.swift */,
+				225970302733CD320057C053 /* QueueLinkedList.swift */,
+			);
+			path = Queue;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,8 +232,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2259702D2733BF060057C053 /* Queue.swift in Sources */,
 				2259702927327B1A0057C053 /* DLLNode.swift in Sources */,
 				2259702627326B850057C053 /* SinglyLinkedList.swift in Sources */,
+				2259702F2733BF6B0057C053 /* QueueArray.swift in Sources */,
+				225970312733CD320057C053 /* QueueLinkedList.swift in Sources */,
 				2259702527326B850057C053 /* SLLNode.swift in Sources */,
 				2259702A27327B1A0057C053 /* DoublyLinkedList.swift in Sources */,
 			);
